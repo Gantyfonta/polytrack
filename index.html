@@ -60,18 +60,31 @@
 
   <script>
     var iframe = document.getElementById("app");
+
+    // Focus iframe when loaded
     iframe.addEventListener("load", function() {
       this.focus();
     });
 
+    // Sync URL state with iframe
     window.addEventListener("message", function(event) {
       var domain = "https://app-polytrack.kodub.com";
-      if (event.origin == domain) {
-        if (event.data.hasOwnProperty("replaceState")) {
-          window.history.replaceState(null, "", event.data["replaceState"]);
-        }
+      if (event.origin === domain && event.data.hasOwnProperty("replaceState")) {
+        window.history.replaceState(null, "", event.data["replaceState"]);
       }
     });
+
+    // Responsive resize (on window resize or orientation change)
+    function resizeIframe() {
+      iframe.style.width = window.innerWidth + "px";
+      iframe.style.height = window.innerHeight + "px";
+    }
+
+    window.addEventListener("resize", resizeIframe);
+    window.addEventListener("orientationchange", resizeIframe);
+
+    // Initial size set
+    resizeIframe();
   </script>
 </body>
 </html>
