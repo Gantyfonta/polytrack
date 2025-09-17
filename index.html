@@ -1,324 +1,89 @@
-<!doctype html>
 <html lang="en-US">
 <head>
-  <meta charset="utf-8" />
   <title>PolyTrack</title>
   <meta name="description" content="A low-poly racing game with loops, jumps and high speeds, where every millisecond counts.">
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta property="og:title" content="PolyTrack">
+  <meta property="og:description" content="A low-poly racing game with loops, jumps and high speeds, where every millisecond counts.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.kodub.com/apps/polytrack">
+  <meta property="og:image" content="https://www.kodub.com/apps/polytrack/image">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@KodubDev">
+  
+  <link rel="stylesheet" type="text/css" href="/css/app.css">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon/favicon-192x192.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="167x167" href="/favicon/favicon-167x167.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/favicon/favicon-180x180.png">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
-    /* Full viewport iframe */
-    html,body { height:100%; margin:0; overflow:hidden; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
     #app {
-      position:fixed;
-      top:0; left:0;
-      width:100vw; height:100vh;
-      border:0;
-    }
-
-    /* Bottom-center button */
-    #trackBtn {
       position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.7);
-      color: white;
-      padding: 10px 18px;
-      border-radius: 999px;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       border: none;
-      font-weight: 600;
-      cursor: pointer;
-      z-index: 9999;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-      backdrop-filter: blur(6px);
     }
-
-    /* Modal */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      background: rgba(0,0,0,0.45);
-    }
-    .modal {
-      width: 92%;
-      max-width: 520px;
-      background: white;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-    }
-    .modal h3 { margin:0 0 8px 0; font-size:18px; }
-    .modal .row { display:flex; gap:8px; margin-top:8px; }
-    .modal input[type="text"] {
-      flex: 1;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-    }
-    .modal button { padding: 10px 14px; border-radius:8px; cursor:pointer; }
-
-    /* Active codes overlay */
-    #codesOverlay {
-      position: fixed;
-      right: 12px;
-      top: 12px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 8px;
-      padding: 8px;
-      max-width: 320px;
-      z-index: 9998;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      font-size: 13px;
-    }
-    #codesOverlay h4 { margin:0 0 6px 0; font-size:13px; }
-    .codeItem {
-      background: #f3f3f3;
-      padding:6px 8px;
-      border-radius:6px;
-      margin-bottom:6px;
-      display:flex;
-      justify-content:space-between;
-      gap:8px;
-      align-items:center;
-    }
-    .codeItem .who { opacity:0.6; font-size:12px; margin-right:8px; }
-    .codeItem .time { opacity:0.6; font-size:11px; margin-left:8px; }
-    .small-muted { font-size:12px; color:#666; margin-top:6px; }
   </style>
+
+  <noscript>
+    <style>
+      #app {
+        display: none;
+      }
+    </style>
+  </noscript>
 </head>
+
 <body>
-  <iframe id="app"
-    src="https://app-polytrack.kodub.com/0.5.1/?"
-    sandbox="allow-scripts allow-same-origin allow-top-navigation allow-popups allow-popups-to-escape-sandbox allow-pointer-lock allow-downloads"
-    allow="autoplay;fullscreen;vr;xr-spatial-tracking;clipboard-write"
-    importance="high">
+  <noscript>Error: JavaScript is not supported</noscript>
+  <iframe id="app" 
+          src="https://app-polytrack.kodub.com/0.5.1/?"
+          importance="high" 
+          sandbox="allow-scripts allow-same-origin allow-top-navigation allow-popups allow-popups-to-escape-sandbox allow-pointer-lock allow-downloads" 
+          allow="autoplay;fullscreen;vr;xr-spatial-tracking;clipboard-write">
     Error: iframe is not supported
   </iframe>
 
-  <!-- Bottom center button -->
-  <button id="trackBtn" title="Share a PolyTrack code with everyone">Share Track Code</button>
+  <script>
+    var iframe = document.getElementById("app");
 
-  <!-- Modal for entering code -->
-  <div class="modal-backdrop" id="modal">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <h3 id="modalTitle">Share a PolyTrack track code</h3>
-      <div class="row">
-        <input id="trackInput" type="text" placeholder="Enter track code (e.g. L0OP-1234)"/>
-        <button id="sendBtn">Send</button>
-      </div>
-      <div style="margin-top:10px; display:flex; gap:8px; justify-content:flex-end;">
-        <button id="closeBtn">Close</button>
-      </div>
-      <p class="small-muted">Codes are shared in realtime with everyone currently on this page. If you reload or close, your code will be removed automatically for everybody.</p>
-    </div>
-  </div>
-
-  <!-- Overlay showing active codes -->
-  <div id="codesOverlay" aria-live="polite">
-    <h4>Active Track Codes</h4>
-    <div id="codesList">
-      <div class="small-muted">No active codes</div>
-    </div>
-  </div>
-
-  <!-- Firebase and app script -->
-  <!-- IMPORTANT: replace firebaseConfig with your project's config -->
-  <script type="module">
-    // --- FIREBASE SETUP ---
-    // Replace these with YOUR project's config from Firebase console (Web app)
-    const firebaseConfig = {
-      apiKey: "REPLACE_WITH_YOURS",
-      authDomain: "REPLACE_WITH_YOURS.firebaseapp.com",
-      databaseURL: "https://REPLACE_WITH_YOURS.firebaseio.com",
-      projectId: "REPLACE_WITH_YOURS",
-      storageBucket: "REPLACE_WITH_YOURS.appspot.com",
-      messagingSenderId: "REPLACE_WITH_YOURS",
-      appId: "REPLACE_WITH_YOURS"
-    };
-
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getDatabase, ref, push, set, onChildAdded, onChildRemoved, onValue, remove, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
-    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const auth = getAuth(app);
-
-    // Sign in anonymously, so we have a stable uid for the session
-    signInAnonymously(auth).catch(err => {
-      console.error("Firebase auth error:", err);
-      alert("Firebase anonymous sign-in failed. Check console and your firebaseConfig.");
+    // Focus iframe when loaded
+    iframe.addEventListener("load", function() {
+      this.focus();
     });
 
-    // DOM refs
-    const modal = document.getElementById('modal');
-    const trackBtn = document.getElementById('trackBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const sendBtn = document.getElementById('sendBtn');
-    const trackInput = document.getElementById('trackInput');
-    const codesList = document.getElementById('codesList');
-    const iframe = document.getElementById('app');
-
-    // Focus iframe on load
-    iframe.addEventListener("load", () => iframe.focus());
-
-    // Show / hide modal
-    trackBtn.addEventListener('click', () => {
-      modal.style.display = "flex";
-      trackInput.focus();
-      trackInput.select();
-    });
-    closeBtn.addEventListener('click', () => modal.style.display = "none");
-
-    // Enter key in input => send
-    trackInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') sendBtn.click();
-      if (e.key === 'Escape') modal.style.display = "none";
-    });
-
-    // Keep a map of active nodes so we can remove UI entries when removed from DB
-    const activeNodes = new Map();
-
-    // Helper to render a code item
-    function renderCodeItem(key, data) {
-      const node = document.createElement('div');
-      node.className = 'codeItem';
-      node.dataset.key = key;
-
-      const left = document.createElement('div');
-      left.style.display = "flex";
-      left.style.alignItems = "center";
-
-      const who = document.createElement('span');
-      who.className = 'who';
-      // show short id for sender
-      who.textContent = (data.uid ? data.uid.slice(0,6) : 'anon');
-
-      const codeText = document.createElement('span');
-      codeText.textContent = data.code;
-
-      left.appendChild(who);
-      left.appendChild(codeText);
-
-      const right = document.createElement('div');
-      right.style.display = "flex";
-      right.style.alignItems = "center";
-      const time = document.createElement('span');
-      time.className = 'time';
-      if (data.timestamp) {
-        const d = new Date(data.timestamp);
-        time.textContent = d.toLocaleTimeString();
-      } else {
-        time.textContent = '';
+    // Sync URL state with iframe
+    window.addEventListener("message", function(event) {
+      var domain = "https://app-polytrack.kodub.com";
+      if (event.origin === domain && event.data.hasOwnProperty("replaceState")) {
+        window.history.replaceState(null, "", event.data["replaceState"]);
       }
-      right.appendChild(time);
-
-      node.appendChild(left);
-      node.appendChild(right);
-
-      return node;
-    }
-
-    // Listen for auth state and then setup DB presence + listeners
-    onAuthStateChanged(auth, user => {
-      if (!user) return;
-      const uid = user.uid;
-
-      // We'll store active codes under "/activeTrackCodes/<pushKey>"
-      const codesRef = ref(db, 'activeTrackCodes');
-
-      // Add listeners for realtime updates
-      onChildAdded(codesRef, (snap) => {
-        const k = snap.key;
-        const d = snap.val();
-        // create UI
-        // if first child and the placeholder exists, clear it
-        if (codesList.children.length === 1 && codesList.children[0].classList.contains('small-muted')) {
-          codesList.innerHTML = '';
-        }
-        const item = renderCodeItem(k, d);
-        activeNodes.set(k, item);
-        codesList.appendChild(item);
-      });
-
-      onChildRemoved(codesRef, (snap) => {
-        const k = snap.key;
-        const el = activeNodes.get(k);
-        if (el && el.parentNode) el.parentNode.removeChild(el);
-        activeNodes.delete(k);
-        // if no items left, show placeholder
-        if (activeNodes.size === 0) {
-          codesList.innerHTML = '<div class="small-muted">No active codes</div>';
-        }
-      });
-
-      // When user sends a code: create a child with push(), and attach onDisconnect().remove()
-      let myNodeRef = null; // will hold the ref to the node we created
-
-      sendBtn.addEventListener('click', async () => {
-        const code = trackInput.value.trim();
-        if (!code) {
-          trackInput.focus();
-          return;
-        }
-
-        try {
-          // create a new push id and set data
-          const newRef = push(codesRef);
-          // populate with uid, code, and client timestamp (use Date.now() to make on-device timestamp)
-          await set(newRef, {
-            uid: uid,
-            code: code,
-            timestamp: Date.now()
-          });
-          // ensure removal when this connection ends
-          onDisconnect(newRef).remove().catch(err => console.warn("onDisconnect error:", err));
-          // if previously had one, optionally remove it (we'll remove older node on disconnect anyway)
-          // store reference so we can remove if they explicitly clear
-          myNodeRef = newRef;
-
-          trackInput.value = "";
-          modal.style.display = "none";
-        } catch (err) {
-          console.error("Failed to write track code:", err);
-          alert("Failed to send track code (see console).");
-        }
-      });
-
-      // Optional: remove any previous nodes for THIS uid that may have been left (cleanup)
-      // This is safe but not required. We scan all active codes and remove any with same uid older than X.
-      onValue(codesRef, (snap) => {
-        // minimal cleanup left intentionally — more sophisticated policies may be used.
-      });
-
-      // When page unloads we also attempt to remove our node immediately
-      window.addEventListener('beforeunload', () => {
-        if (myNodeRef) {
-          // best-effort immediate remove; onDisconnect will also handle it
-          remove(myNodeRef).catch(()=>{/*ignore*/});
-        }
-      });
-
-    }); // end onAuthStateChanged
-
-    // — small accessibility nicety: close modal if clicking backdrop
-    document.getElementById('modal').addEventListener('click', (e) => {
-      if (e.target === modal) modal.style.display = "none";
     });
 
-    // Responsive iframe sizing (keeps iframe full viewport, including on rotate)
-    function resizeIframe(){
+    // Responsive resize (on window resize or orientation change)
+    function resizeIframe() {
       iframe.style.width = window.innerWidth + "px";
       iframe.style.height = window.innerHeight + "px";
     }
-    window.addEventListener('resize', resizeIframe);
-    window.addEventListener('orientationchange', resizeIframe);
+
+    window.addEventListener("resize", resizeIframe);
+    window.addEventListener("orientationchange", resizeIframe);
+
+    // Initial size set
     resizeIframe();
   </script>
 </body>
