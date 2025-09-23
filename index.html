@@ -1,90 +1,30 @@
-<html lang="en-US">
-<head>
-  <title>PolyTrack</title>
-  <meta name="description" content="A low-poly racing game with loops, jumps and high speeds, where every millisecond counts.">
-  <meta property="og:title" content="PolyTrack">
-  <meta property="og:description" content="A low-poly racing game with loops, jumps and high speeds, where every millisecond counts.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://wowdabug.github.io/s2/polytrack/">
-  <meta property="og:image" content="https://www.kodub.com/apps/polytrack/image">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@KodubDev">
-  
-  <link rel="stylesheet" type="text/css" href="/css/app.css">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="48x48" href="/favicon/favicon-48x48.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon/favicon-192x192.png">
-  <link rel="apple-touch-icon" type="image/png" sizes="167x167" href="/favicon/favicon-167x167.png">
-  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/favicon/favicon-180x180.png">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WDBG</title>
+  <script src="../../scripts/main.js"></script><link rel="icon" href="https://wowdabug.github.io/wdbg/images/favicon.png">
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
       height: 100%;
-      width: 100%;
+      margin: 0;
       overflow: hidden;
     }
-
-    #app {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+    iframe {
+      width: 100%;
+      height: 100%;
       border: none;
     }
   </style>
-
-  <noscript>
-    <style>
-      #app {
-        display: none;
-      }
-    </style>
-  </noscript>
 </head>
-
 <body>
-  <noscript>Error: JavaScript is not supported</noscript>
-  <iframe id="app" 
-          src="https://app-polytrack.kodub.com/0.5.1/?"
-          importance="high" 
-          sandbox="allow-scripts allow-same-origin allow-top-navigation allow-popups allow-popups-to-escape-sandbox allow-pointer-lock allow-downloads" 
-          allow="autoplay;fullscreen;vr;xr-spatial-tracking;clipboard-write">
-    Error: iframe is not supported
-  </iframe>
+  <iframe id="gameFrame" title="PolyTrack" src="https://wowdabug.github.io/s2/polytrack/"></iframe>
 
   <script>
-    var iframe = document.getElementById("app");
-
-    // Focus iframe when loaded
-    iframe.addEventListener("load", function() {
-      this.focus();
-    });
-
-    // Sync URL state with iframe
-    window.addEventListener("message", function(event) {
-      var domain = "https://app-polytrack.kodub.com";
-      if (event.origin === domain && event.data.hasOwnProperty("replaceState")) {
-        window.history.replaceState(null, "", event.data["replaceState"]);
-      }
-    });
-
-    // Responsive resize (on window resize or orientation change)
-    function resizeIframe() {
-      iframe.style.width = window.innerWidth + "px";
-      iframe.style.height = window.innerHeight + "px";
-    }
-
-    window.addEventListener("resize", resizeIframe);
-    window.addEventListener("orientationchange", resizeIframe);
-
-    // Initial size set
-    resizeIframe();
+    const defaultUrl = "https://wowdabug.github.io/s2/polytrack/";
+    const storedUrl = localStorage.getItem("urlPolytrack") || defaultUrl;
+    document.getElementById("gameFrame").src = storedUrl;
   </script>
-</body>
-</html>
+
+
+
+</body></html>
